@@ -4,13 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"src/service/database"
 	"src/service/utils"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func searchProductsByName(keyword string) ([]utils.Product, error) {
+func SearchProductsByName(keyword string) ([]utils.Product, error) {
 
 	// MongoDB query to find products by name
 	filter := bson.M{
@@ -21,7 +22,7 @@ func searchProductsByName(keyword string) ([]utils.Product, error) {
 	options := options.Find().SetLimit(20)
 
 	// Execute the query
-	cursor, err := database.productCollection.Find(context.TODO(), filter, options)
+	cursor, err := database.ProductCollection.Find(context.TODO(), filter, options)
 
 	if err != nil {
 		return nil, err
@@ -40,12 +41,12 @@ func searchProductsByName(keyword string) ([]utils.Product, error) {
 
 	return products, nil
 }
-func searchHandler(w http.ResponseWriter, r *http.Request) {
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract search query from URL
 	keyword := r.URL.Query().Get("keyword")
 
 	// Call the search function
-	results, err := searchProductsByName(keyword)
+	results, err := SearchProductsByName(keyword)
 
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

@@ -11,12 +11,12 @@ import (
 
 var (
 	client                *mongo.Client
-	productCollection     *mongo.Collection
+	ProductCollection     *mongo.Collection
 	databaseName          = "Per-Ecommerce"
 	productCollectionName = "Product"
 )
 
-func connectDB() {
+func ConnectDB() {
 
 	// Set up MongoDB client options
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
@@ -35,7 +35,7 @@ func connectDB() {
 	}
 	// Specify the database
 	database := client.Database(databaseName)
-	productCollection = database.Collection(productCollectionName)
+	ProductCollection = database.Collection(productCollectionName)
 	//
 	fmt.Println("Connected to MongoDB!")
 }

@@ -1,9 +1,10 @@
 package config
 
 import (
+	"log"
+
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
-	"log"
 )
 
 var (
@@ -15,7 +16,7 @@ var (
 	productCollectionName = "Product"
 )
 
-func loadEnv() {
+func LoadEnv() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
